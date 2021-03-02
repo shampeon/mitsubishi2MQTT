@@ -176,6 +176,8 @@ void setup() {
     hp.setSettingsChangedCallback(hpSettingsChanged);
     hp.setStatusChangedCallback(hpStatusChanged);
     hp.setPacketCallback(hpPacketDebug);
+    // Allow Remote/Panel
+    hp.enableExternalUpdate();
     hp.connect(&Serial);
     heatpumpStatus currentStatus = hp.getStatus();
     heatpumpSettings currentSettings = hp.getSettings();
@@ -1516,6 +1518,7 @@ void haConfig() {
   haConfig["max_temp"]                      = convertCelsiusToLocalUnit(max_temp, useFahrenheit);
   haConfig["temp_step"]                     = temp_step;
   haConfig["pow_cmd_t"]                     = ha_power_set_topic;
+  haConfig["temperature_unit"]              = useFahrenheit ? "F" : "C";
 
   JsonArray haConfigFan_modes = haConfig.createNestedArray("fan_modes");
   haConfigFan_modes.add("AUTO");
